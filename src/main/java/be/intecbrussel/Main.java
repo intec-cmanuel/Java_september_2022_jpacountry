@@ -1,6 +1,7 @@
 package be.intecbrussel;
 
 import be.intecbrussel.model.Country;
+import be.intecbrussel.model.President;
 import be.intecbrussel.service.CountryService;
 
 import java.util.Optional;
@@ -10,10 +11,15 @@ public class Main {
 
 
     public static void main(String[] args) {
+        // Create presidents
+        President albert = new President("Albert", 80);
+        President macron = new President("Macron", 60);
+        President dina = new President("Dina Boluarte", 59);
+
         // Create countries
-        Country belgium = new Country("Belgium", 11000000);
-        Country france = new Country("France", 60000000);
-        Country peru = new Country("Peru", 33000000);
+        Country belgium = new Country("Belgium", 11000000, albert);
+        Country france = new Country("France", 60000000, macron);
+        Country peru = new Country("Peru", 33000000, dina);
 
         // Service handles the logic
         CountryService cs = new CountryService();
@@ -24,7 +30,7 @@ public class Main {
         cs.createCountry(peru);
 
         // Read countries from database
-        Optional<Country> dbCountry = cs.readCountry("venezuela");
+        Optional<Country> dbCountry = cs.readCountry("Peru");
         if (dbCountry.isPresent()) {
             System.out.println(dbCountry.get());
         } else {
@@ -39,7 +45,8 @@ public class Main {
         if (countryToUpdate.isPresent()) {
             Country foundCountry = countryToUpdate.get();
             foundCountry.setPopulation(foundCountry.getPopulation()+1);
-            cs.uC(foundCountry);
+            foundCountry.getPresident().setAge(99);
+            cs.updateCountryButEasier(foundCountry);
         }
     }
 }
