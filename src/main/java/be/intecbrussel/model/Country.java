@@ -36,6 +36,10 @@ public class Country {
         this.population = population;
     }
 
+    public void updateWith(Country country) {
+        this.population = country.population;
+    }
+
     @Override
     public String toString() {
         return "Country{" +
